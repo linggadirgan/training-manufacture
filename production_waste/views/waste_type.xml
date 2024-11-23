@@ -1,0 +1,27 @@
+<odoo>
+
+    <data>
+    
+        <record id="waste_type_view_tree" model="ir.ui.view">
+            <field name="name">waste.type.view.tree</field>
+            <field name="model">waste.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="waste_type_action" model="ir.actions.act_window">
+            <field name="name">Waste Type</field>
+            <field name="res_model">waste.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

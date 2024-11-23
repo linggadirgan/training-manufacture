@@ -1,0 +1,50 @@
+<odoo>
+
+    <menuitem 
+        id="menu_waste_management" 
+        name="Production Waste" 
+        web_icon="production_waste,static/description/icon.png"
+        sequence="10"/>
+
+    <menuitem 
+        id="menu_waste_record" 
+        name="Waste Records" 
+        parent="menu_waste_management" 
+        action="production_waste.action_waste_record" 
+        sequence="10"/> 
+
+    <menuitem 
+        id="menu_waste_reporting" 
+        name="Reporting" 
+        parent="menu_waste_management" 
+        sequence="20"/> 
+    
+    <menuitem 
+        id="menu_waste_reporting_summary" 
+        name="Summary Waste Record" 
+        parent="menu_waste_reporting" 
+        action="production_waste.wizard_summary_waste_record_action" 
+        sequence="10"/> 
+
+    <menuitem 
+        id="menu_waste_configuration" 
+        name="Configuration" 
+        parent="menu_waste_management" 
+        groups="production_waste.group_waste_manager"
+        sequence="30"/> 
+
+    <menuitem 
+        id="menu_waste_mitigation" 
+        name="Waste Mitigation" 
+        parent="menu_waste_configuration" 
+        action="production_waste.waste_mitigation_action" 
+        sequence="10"/> 
+    
+    <menuitem 
+        id="menu_waste_type" 
+        name="Waste Type" 
+        parent="menu_waste_configuration" 
+        action="production_waste.waste_type_action" 
+        sequence="20"/> 
+
+</odoo>

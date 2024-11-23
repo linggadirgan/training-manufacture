@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_waste_user,waste.record.user,model_waste_record,production_waste.group_waste_user,1,1,1,0
+access_waste_manager,waste.record.manager,model_waste_record,production_waste.group_waste_manager,1,1,1,1
+access_waste_component_user,waste.component.user,model_waste_component,production_waste.group_waste_user,1,1,1,1
+access_waste_mitigation_user,waste.mitigation.user,model_waste_mitigation,production_waste.group_waste_user,1,1,1,0
+access_waste_mitigation_manager,waste.mitigation.manager,model_waste_mitigation,production_waste.group_waste_manager,1,1,1,1
+access_waste_type_user,waste.type.user,model_waste_type,production_waste.group_waste_user,1,1,1,0
+access_waste_type_manager,waste.type.manager,model_waste_type,production_waste.group_waste_manager,1,1,1,1
+access_wizard_summary_waste_record,wizard.summary.waste.record.all,model_wizard_summary_waste_record,,1,1,1,1

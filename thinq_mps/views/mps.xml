@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- product forecast -->
+        <record id="bh_mps_forecast_view_tree" model="ir.ui.view">
+            <field name="name">bh.mps.forecast.view.tree</field>
+            <field name="model">mrp.product.forecast</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" default_order="date desc" expand="1">
+                    <field name="date"/>
+                    <field name="forecast_qty"/>
+                    <field name="replenish_qty" invisible="1"/>
+                    <field name="mo_count" invisible="1"/>
+                    <field name="rfq_count" invisible="1"/>
+                    <field name="orderpoint" invisible="1"/>
+                    <field name="replenish_qty_updated" invisible="1"/>
+                    <field name="procurement_launched" invisible="1"/>
+                    <button name="action_view_orderpoint" type="object" class="oe_stat_button" icon="fa-credit-card" invisible="not orderpoint" string="Replenishment"/>
+                    <button name="action_view_mo" type="object" class="oe_stat_button" icon="fa-wrench" invisible="mo_count == 0" string="MO"/>
+                    <button string="Replenish" name="action_replenish" type="object" class="oe_highlight" invisible="mo_count > 0 or orderpoint"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="bh_mps_forecast_view_form" model="ir.ui.view">
+            <field name="name">bh.mps.forecast.view.form</field>
+            <field name="model">mrp.product.forecast</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="date"/>
+                            <field name="forecast_qty"/>
+                            <field name="replenish_qty" invisible="1"/>
+                            <field name="replenish_qty_updated" invisible="1"/>
+                            <field name="procurement_launched" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="bh_mps_forecast_view_search" model="ir.ui.view">
+            <field name="name">bh.mps.forecast.view.search</field>
+            <field name="model">mrp.product.forecast</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="date"/>
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter
+                            name="group_by_date"
+                            string="Date"
+                            domain="[]"
+                            context="{'group_by' : 'date'}"
+                        />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="bh_mps_view_tree" model="ir.ui.view">
+            <field name="name">bh.mps.view.tree</field>
+            <field name="model">mrp.production.schedule</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="forecast_target_qty" optional="show"/>
+                    <field name="min_to_replenish_qty" optional="show"/>
+                    <field name="max_to_replenish_qty" optional="show"/>
+                    <field name="total_forecast_qty"/>
+                    <field name="total_replenish_qty" invisible="1"/>
+                    <field name="product_uom_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="bh_mps_view_form" model="ir.ui.view">
+            <field name="name">bh.mps.view.form</field>
+            <field name="model">mrp.production.schedule</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Replenish" name="action_replenish" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!-- <button name="action_view_rfq" type="object" class="oe_stat_button" icon="fa-credit-card" attrs="{'invisible': [('rfq_count','=',0)]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="rfq_count"/></span>
+                                    <span class="o_stat_text">RFQ</span>
+                                </div>
+                            </button> -->
+                            <button name="action_view_orderpoint" type="object" class="oe_stat_button" icon="fa-credit-card" invisible="orderpoint_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="orderpoint_count"/></span>
+                                    <span class="o_stat_text">Replenishment</span>
+                                </div>
+                            </button>
+                            <button name="action_view_mo" type="object" class="oe_stat_button" icon="fa-wrench" invisible="mo_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="mo_count"/></span>
+                                    <span class="o_stat_text">Manufacturing Orders</span>
+                                </div>
+                            </button>
+                            <button name="view_components" type="object" class="oe_stat_button" icon="fa-flask" invisible="components_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="components_count"/></span>
+                                    <span class="o_stat_text">Components</span>
+                                </div>
+                            </button>
+                            <button string="Day to Day" name="action_view_forecast_detail" type="object" class="oe_stat_button" icon="fa-list"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id" options="{'no_create': True}"/>
+                                <field name="warehouse_id" options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="total_forecast_qty"/>
+                                <field name="total_replenish_qty" invisible="1"/>
+                                <field name="forecast_target_qty"/>
+                                <field name="min_to_replenish_qty"/>
+                                <field name="max_to_replenish_qty"/>
+                                <field name="product_uom_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="bh_mps_view_search" model="ir.ui.view">
+            <field name="name">bh.mps.view.search</field>
+            <field name="model">mrp.production.schedule</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="product_id" string="Reference" filter_domain="['|','|', '|', '|', ('project_id', 'ilike', self), ('product_id', 'ilike', self), ('warehouse_id', 'ilike', self), ('uniq_no', 'ilike', self), ('job_unique_id', 'ilike', self)]"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="categ_id"/>
+                    <separator/>
+                    <group>
+                        <filter string="Product" name="group_by_product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Warehouse" name="group_by_product" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Product Category" name="group_by_product" context="{'group_by': 'categ_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="bh_mps_action" model="ir.actions.act_window">
+            <field name="name">MPS</field>
+            <field name="res_model">mrp.production.schedule</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="bh_mps_view_search"/>
+        </record>
+
+        <record model="ir.actions.server" id="action_replenish_bulk">
+            <field name="name">Replenish</field>
+            <field name="model_id" ref="mrp_mps.model_mrp_production_schedule"/>
+            <field name="binding_model_id" ref="mrp_mps.model_mrp_production_schedule" />
+            <field name="state">code</field>
+            <field name="binding_view_types">list</field>
+            <field name="code">
+            if records:
+                records.action_replenish()
+            </field>
+            <field name="state">code</field>
+        </record>
+
+        <menuitem
+            id="bh_mps_menu"
+            name="Master Production Schedule"
+            action="bh_mps_action"
+            parent="mrp_mps.mrp_mps_menu_planning"
+            sequence="0"/>
+
+        <record id="mrp_mps.mrp_mps_report_menu" model="ir.ui.menu">
+            <field name="name">MPS Timeline / Gantt</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

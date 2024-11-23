@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="mrp_production_view_form_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.view.form.inherit</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='miscellaneous']" position="before">
+                    <page name="overhead_cost" string="Overhead Cost">
+                        <field name="overhead_cost_ids">
+                            <tree editable="bottom">
+                                <field name="operation_id" options="{'no_create': True}"/>
+                                <field name="cost"/>
+                                <field name="planned_hour" widget="float_time"/>
+                                <field name="total_cost"/>
+                                <field name="actual_hour" widget="float_time" readonly="1"/>
+                                <field name="total_actual_cost" readonly="1"/>
+                                <field name="currency_id" column_invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

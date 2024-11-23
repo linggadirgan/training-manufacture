@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="product_category_view_form_inherit" model="ir.ui.view">
+            <field name="name">product.category.view.form.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="mrp_account.view_category_property_form"/>
+            <field name="arch" type="xml">
+                <field name="property_stock_account_production_cost_id" position="after">
+                    <field name="employee_cost_account_id" options="{'no_create': True}"/>
+                    <field name="overhead_cost_account_id" options="{'no_create': True}"/>
+                    <field name="energy_cost_account_id" options="{'no_create': True}"/>
+                </field>
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

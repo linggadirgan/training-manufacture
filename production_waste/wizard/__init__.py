@@ -1,0 +1,1 @@
+from . import wizard_summary_waste_record
